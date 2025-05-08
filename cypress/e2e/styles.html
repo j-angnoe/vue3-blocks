@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue Blocks (vue3) Styles</title>
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+
+        <template component="app">
+            This is the Vue App
+            
+            <global-style-component></global-style-component>
+            <scoped-style-component></scoped-style-component>
+            <root-after-scoped-style-component></root-after-scoped-style-component>
+        </template>
+        
+        <template component="global-style-component">
+           <div class="global-style-component">
+              content should be placed in front of this via css.
+           </div>
+           <style>
+            .global-style-component { 
+                color: green;
+            }
+            .global-style-component:after { 
+                
+                content: 'globally styled component works!'
+            }
+           </style>
+        </template>
+
+        <template component="scoped-style-component">
+            <!-- see if you can target the first diff -->
+           <div class="scoped-style-component first">
+              scoped-style-component...
+           </div>
+           <style scoped>
+            & { 
+                color: red;
+            }
+
+            &:after { 
+                content: 'scoped-style-component works!';
+            }
+           </style>
+        </template>
+
+        <template component="root-after-scoped-style-component">
+            <!-- see if you can target the first diff via root:after -->
+           <div class="root-after-component">
+              scoped-root-after
+              <div>This should not contain anything</div>
+           </div>
+           <style scoped>
+            & { color: blue; }
+            &:after { 
+                content: 'root-after works!';
+            }
+           </style>
+        </template>
+
+        <!-- todo styling wrt scoped content --> 
+
+        <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
+            }
+        }
+        </script>
+        <script type="module">
+            import "vue";
+            import {VueBlocks} from "/src/VueBlocks.js";
+
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

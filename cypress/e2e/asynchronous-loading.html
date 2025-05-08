@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue Blocks (vue3) Asynchronous loading</title>
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+        <template component="app">
+            This is the Vue App
+            <br>
+            <fieldset id="load-async-sfc-file">
+                <legend>Vue2 style SFC loaded asynchronously</legend>
+                <async-sfc-file></async-sfc-file>
+            </fieldset>
+
+            <fieldset id="load-async-module">
+                <legend>Asynchronously loaded vue-blocks module</legend>
+                <module1-component1></module1-component1>
+                <module1-component2></module1-component2>
+                <module1-component3></module1-component3>
+            </fieldset>
+
+            <fieldset id="load-async-relative-paths">
+                <legend>Asynchronously loaded vue-blocks with challenging relative paths</legend>
+                <module2-component1></module2-component1>
+            </fieldset>
+        </template>
+
+        <template component="component-1">
+            <p>
+                Content for component 1
+                <br>
+                Test variable display: {{ msg }}
+            </p>
+            <script setup>
+                const msg = ref('my ' + 'message');
+
+                return {msg}
+            </script>
+        </template>
+        
+        <template src="async-sfc-file.vue"></template>
+
+        <template src="async-module1.html"></template>
+        <template src="anotherfolder/async-module2.html"></template>
+
+        <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
+            }
+        }
+        </script>
+        <script type="module">
+            import "vue";
+            import {VueBlocks} from "/src/VueBlocks.js";
+
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

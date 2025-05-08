@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue Blocks (vue3) Basics</title>
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+        <template component="app">
+            This page contains code samples from the 
+            <a href="https://vuejs.org/guide/essentials/component-basics.html">vue3 guide</a>
+            to assert that copy-pasting valid vue3 code samples always
+            works as expected.<br>
+            <quick-nav></quick-nav>
+            <hr>
+
+            Page: {{ $route.path }}<br>
+
+            <router-view></router-view>
+        </template>
+
+        <template url="/" redirect="/vue-basics-1"></template>
+
+        <template component="quick-nav">
+            <div style="display: flex; gap: 0.5em;">
+             <router-link v-for="r in routes" :id="'link-to-' + r.name" :to="r.path">{{ r?.meta?.title || r.path}}</router-link>
+             <slot></slot>
+            </div>
+         </template>
+
+        <template url="/vue-basics-1">
+            <script setup>
+                import { ref } from 'vue'
+                
+                const count = ref(0)
+            </script>
+        
+            <template>
+                <button @click="count++">You clicked me {{ count }} times.</button>
+            </template>
+        </template>
+
+        <template url="/vue-basics-2" title="">
+            
+            <script>
+            import { ref } from 'vue'
+
+            export default {
+            setup() {
+                const count = ref(0)
+                return { count }
+            },
+            template: `
+                <button @click="count++">
+                You clicked me {{ count }} times.
+                </button>`
+            // Can also target an in-DOM template:
+            // template: '#my-template-element'
+            }
+            </script>
+        </template>
+
+        <template url="/vue-include-another-component" title="">
+            <script setup>
+                import ButtonCounter from './ButtonCounter.vue'
+            </script>
+            
+            <template>
+                <h1>Here is a child component!</h1>
+                <ButtonCounter />
+            </template>
+        </template>
+
+
+        <template url="/vue-alertbox-example" title="">
+            <script setup>
+                import AlertBox from './AlertBox.vue'
+            </script>
+            
+            <template>
+                <alert-box>
+                    Something bad happened.
+                </alert-box>
+            </template>
+        </template>
+    <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js",
+                "vue-router": "https://unpkg.com/vue-router@4/dist/vue-router.esm-browser.prod.js"
+            }
+        }
+        </script>
+        <script type="module">
+            import "vue";
+            import {VueBlocks} from "/src/VueBlocks.js";
+
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

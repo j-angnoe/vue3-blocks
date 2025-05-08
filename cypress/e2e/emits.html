@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue Blocks (vue3) Emits</title>
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+        <template component="app">
+            <h1>Vue3-blocks Emits</h1>
+            <composition-api-emits @my-event="log.push($event)"></composition-api-emits>
+            <options-api-emits @my-event="log.push($event)"></options-api-emits>
+            <pre v-text="log"></pre>
+            <script setup>
+                return {
+                    log: ref([])
+                }
+            </script>
+        </template>
+
+
+        <template component="composition-api-emits" emits="myEvent">
+            <script setup>
+                onMounted(() => {
+                    $emit('myEvent', 'hello from composition api via myEvent');
+                    $emit('my-event', 'hello from composition api via my-event');
+                })
+            </script>
+        </template>
+        <template component="options-api-emits" emits="myEvent">
+            <script>
+                return class vue { 
+                    mounted() {
+                        this.$emit('myEvent', 'hello from options api via myEvent');
+                        this.$emit('my-event', 'hello from options api via my-event');
+                    }
+                }
+            </script>
+        </template>
+        <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
+            }
+        }
+        </script>
+        <script type="module">
+            import "vue";
+            import {VueBlocks} from "/src/VueBlocks.js";
+
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

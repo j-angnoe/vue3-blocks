@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue Blocks (vue3) Components</title>
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+
+
+
+        <template component="app">
+            <vue3-composition-component></vue3-composition-component><br>
+            <vue3-composition-component-variant2></vue3-composition-component-variant2><br>
+            <vue3-options-api></vue3-options-api><br>
+            <vue3-class-vue-style></vue3-class-vue-style><br>
+            <component-without-scripts></component-without-scripts><br>
+        </template>
+
+        <template component="vue3-composition-component">
+            vue3-composition-component: {{ status }} 
+            <script setup>
+                const status = ref('oki' + 'doki')
+                return { status }
+            </script>
+        </template>
+
+        <template component="vue3-composition-component-variant2">
+            <template>
+                vue3-composition-component-variant2: {{ status }} 
+            </template>
+            <script setup>
+                const status = ref('oki' + 'doki')
+                return { status }
+            </script>
+        </template>
+
+        <template component="vue3-options-api">
+            vue3-options-api: {{ status }}
+            <style scoped>
+            
+            </style>
+            <script>
+                export default {
+                    data() { 
+                        return {
+                            'status': 'oki' + 'doki'
+                        }
+                    }
+                }
+            </script>
+        </template>
+
+
+        <template component="vue3-class-vue-style">
+            vue3-class-vue-style: {{ status }} 
+            <script>
+                return class vue { 
+                    status = 'okidoki'
+                } 
+            </script>
+        </template>
+
+        <template component="component-without-scripts">
+           {{ ['component','without','script'].join(' ')}}
+        </template>
+        
+        <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
+            }
+        }
+        </script>
+
+        <script type="module">
+            import "vue";
+            import {VueBlocks} from "/src/VueBlocks.js";
+
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

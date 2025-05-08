@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue Blocks (vue3) AST Parsing</title>
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+        <template component="app">
+            This is the Vue App<br>
+
+            <composition-api-basics></composition-api-basics>
+            <define-props een="EEN" twee="TWEE"></define-props>
+            
+            <define-emits @my-event="log.push($event)"></define-emits>
+            
+            <br>log: <pre v-text="log"></pre>
+            <br> <import-component></import-component>
+             <script>
+                return class vue { 
+                    log = []
+                }
+             </script>
+        </template>
+
+        <template component="import-component">
+            <template>
+                BUTTON COUNTER: 
+                <br><button-counter></button-counter>
+            </template>
+            <script setup>
+                import ButtonCounter from './vue3-examples/ButtonCounter.vue';
+            </script>
+        </template>
+        
+        <template component="define-emits">
+            <script setup>
+                const emits = defineEmits(['my-event'])
+                onMounted(() => {
+                    emits('myEvent', 'emit myEvent from define-emits')
+                    emits('my-event', 'emit my-event from define-emits')
+                })
+            </script>
+        </template>
+        <template component="define-props">
+            <template>
+                Prop een: {{ een }}<br>
+                Prop twee: {{ twee }}
+            </template>
+            <style scoped>
+            </style>
+            <script setup>
+            const {een,twee} = defineProps(['een','twee'])
+            </script>
+        </template>
+        <template component="composition-api-basics">
+            <div>
+                variableWithXXX: {{ variableWithXXX }}<br>
+                destructure1: {{ destructure1 }}<br>
+                destructure2: {{ destructure2 }}<br>
+                toThis: {{ toThis }}<br>
+                myFunctionResult: {{ myFunctionResult }}<br>
+                <button id="click-my-function" @click="myFunction">Click my-function</button>
+            </div>
+
+            <script setup>
+                var x = ref('y');
+                const variableWithXXX = ref('xxx');
+            
+                const { destructure1, destructure2 } = {
+                    "destructure1": "Destructure1value", 
+                    "destructure2": "Destructure2value"
+                }
+                const {read: toThis} = {read: 'thisShouldBeInToThis'}
+
+                const myFunctionResult = ref('not clicked');
+                function myFunction() { 
+                    myFunctionResult.value = 'has been clicked!';
+                    return {myFunction}
+                }
+            </script>
+        </template>        
+    
+        <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
+            }
+        }
+        </script>
+        <script type="module">
+            import "vue";
+            import {VueBlocks} from "/src/VueBlocks.js";
+
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

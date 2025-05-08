@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html data-theme="dark">
+    <head>
+        <title>Vue Blocks (vue3) Basics</title>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+        <template component="app">
+            <div class="flex flex-col gap-5 m-5">
+                This is the Vue App
+                <br>
+                <fieldset class=" bg-">
+                    <legend>Component 1</legend>
+                    <component-1></component-1>
+                </fieldset>
+
+                <div class="flex gap-5">
+                    <button class="btn">Button</button>
+                    <button class="btn btn-primary">Button</button>
+                    <button class="btn btn-primary w-64 rounded-full w-">Button</button>
+                </div>
+
+                <div class="bg-primary p-2 mt-2 text-primary-content rounded-box">Primary color</div>
+
+                <div class="flex gap-5">
+                    <div class="glass size-50 flex justify-center items-center">Glass</div>
+                    <div class="glass size-100 flex justify-center items-center">Glass</div>
+                    <div class="glass size-75 flex justify-center items-center">Glass</div>
+                </div>
+
+                <div>
+                    Details/summary dropdown: <br> 
+                    <!-- dropdown hover werkt hier niet -->
+                    <details class="dropdown ">
+                        <summary class="btn m-1">open or close</summary>
+                        <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                            <li><a>Item 1</a></li>
+                            <li><a>Item 2</a></li>
+                        </ul>
+                    </details>
+                    <br>
+                    Popover dropdown:
+                    <button class="btn" popovertarget="popover-1" style="anchor-name:--anchor-1">
+                    Button
+                    </button>
+                    
+                    <ul class="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
+                        popover id="popover-1" style="position-anchor:--anchor-1">
+                        <li><a>Item 1</a></li>
+                        <li><a>Item 2</a></li>
+                    </ul>
+
+                    Dropdown hover: 
+                    <div class="dropdown dropdown-hover">
+                        <div xrole="button" class="btn m-1">Hover</div>
+                        <ul class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                            <li><a @click="itemOne()">Item 1</a></li>
+                            <li><a @click="itemTwo()">Item 2</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <script>
+            return class vue { 
+                itemOne() { alert("ITem 1") }
+                itemTwo() { alert("ITem 2") }
+            }
+            </script>   
+        </template>
+
+        <template component="component-1">
+            <p>
+                Content for component 1
+                <br>
+                Test variable display: {{ msg }}
+            </p>
+            <script setup>
+                const msg = ref('my ' + 'message');
+
+                return {msg}
+            </script>
+        </template>
+        
+        <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
+            }
+        }
+        </script>
+        <script type="module">
+            import "vue";
+            import {VueBlocks} from "/src/VueBlocks.js";
+
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

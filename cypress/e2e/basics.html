@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue Blocks (vue3) Basics</title>
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+        <template component="app">
+            This is the Vue App
+            <br>
+            <fieldset>
+                <legend>Component 1</legend>
+                <component-1></component-1>
+            </fieldset>
+        </template>
+
+        <template component="component-1">
+            <p>
+                Content for component 1
+                <br>
+                Test variable display: {{ msg }}
+            </p>
+            <script setup>
+                const msg = ref('my ' + 'message');
+
+                return {msg}
+            </script>
+        </template>
+        
+        <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
+            }
+        }
+        </script>
+        <script type="module">
+            import "vue";
+            import {VueBlocks} from "/src/VueBlocks.js";
+
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

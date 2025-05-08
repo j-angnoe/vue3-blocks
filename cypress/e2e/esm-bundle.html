@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue Blocks (vue3) Basics</title>
+        <!-- <script src="/dist/vue-blocks.js"></script> -->
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+        <template component="app">
+            This is the Vue App
+            <br>
+            <fieldset>
+                <legend>Component 1</legend>
+                <component-1></component-1>
+            </fieldset>
+        </template>
+
+        <template component="component-1">
+            <p>
+                Content for component 1
+                <br>
+                Test variable display: {{ msg }}
+            </p>
+            <script setup>
+                const msg = ref('my ' + 'message');
+
+                return {msg}
+            </script>
+        </template>
+        
+        <script type="module">
+            import { VueBlocks } from "/dist/vue-blocks.esm.js"
+            
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

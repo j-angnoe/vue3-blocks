@@ -1,0 +1,27 @@
+{
+  "name": "vue-blocks",
+  "version": "0.7.0",
+  "description": "Vue Blocks Framework",
+  "main": "index.js",
+  "scripts": {
+    "start": "php -S localhost:8080 -t .",
+    "test": "cypress run",
+    "cypress": "cypress open -P .",
+    "prepublish": "npm run build && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j-angnoe/vue3-blocks.git"
+  },
+  "files": [
+    "*.js",
+    "README.md",
+    "dist/",
+    "src/"
+  ],
+  "author": "Joshua Angnoe",
+  "license": "ISC",
+  "devDependencies": {
+    
+  }
+}

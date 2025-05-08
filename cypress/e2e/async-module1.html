@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="./async-module-style.css">
+
+<template component="module1-component1">
+   <div>
+       This is module 1 component 1
+   </div>
+   <style scoped>
+   </style>
+   <script setup>
+      return {}
+   </script>
+</template>
+
+
+<template component="module1-component2">
+    <div>
+        This is module 1 component 2
+    </div>
+    <style scoped>
+   
+   </style>
+   <script setup>
+      return {}
+   </script>
+</template>
+
+<template component="module1-component3">
+    <div>
+        This is module1 component 3 that should show async vue sfc file:
+        <async-sfc-file></async-sfc-file>
+    </div>
+    <style scoped>
+   
+   </style>
+   <script setup>
+      return {}
+   </script>
+</template>
+
+<template src="async-sfc-file.vue"></template>
+
+<!-- this SHOULD NOT CAUSE infinite loops -->
+<template src="async-module1.html"></template>

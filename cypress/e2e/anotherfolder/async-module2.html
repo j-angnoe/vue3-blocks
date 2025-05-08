@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="async-module2-style.css">
+
+<template component="module2-component1">
+    <div class="module2">
+        This should be color green {{ msg }}
+        My location = {{ myPath }}
+    </div>
+    <script setup>
+        import uniqid from "uniqid"
+        const msg = ref("unique id: " + uniqid())
+        const myPath = document.location;
+        return {msg, myPath}
+    </script>
+</template>

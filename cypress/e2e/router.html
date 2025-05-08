@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue Blocks (vue3) Router</title>
+    </head>
+    <body>            
+        <div id="app-container">
+            <app></app>
+        </div>
+        <template component="app">
+            <quick-nav>
+                <router-link id="link-to-page-page5-with-params" to="/page5/123">Page 5 with params</router-link>
+            </quick-nav>
+            <hr>
+            <router-view my-router-view-prop="hoi"></router-view>
+        </template>
+
+        <template component="quick-nav">
+           <div style="display: flex; gap: 0.5em;">
+            <router-link v-for="r in routes.filter(r=>r.meta?.title)" :id="'link-to-' + r.name" :to="r.path">{{ r?.meta?.title || r.path}}</router-link>
+            <slot></slot>
+           </div>
+        </template>
+
+        <template component="quick-subnav">
+            <div style="display: flex; gap: 0.5em;">
+                <router-link
+                    v-for="c in routes.find(r => r.name == $route.matched[0].name)?.children.filter(r=>r.meta?.title)"
+                    :to="c.path"
+                    :id="'link-to-' + c.name"
+                    >{{c?.meta?.title || 'index'}}</router-link>
+            </div>
+           <script setup>
+
+            </script>
+        </template>
+
+        <template url="/" title="Home">
+           This is page 1
+        </template>
+
+        <template url="/page2" title="Page 2">
+           This is page 2
+        </template>
+        
+        <template url="/page3" title="Page 3">
+            This is page 3 which contains subpages
+
+            <quick-subnav></quick-subnav>
+
+            <div>
+                <router-view></router-view>
+            </div>
+        </template>
+
+        <template sub-url="/page3/" title="Page 3.1">
+            Subpage for page 3
+        </template>
+        <template sub-url="/page3/page2" title="Page 3.2">
+            Subpage 2 for page 3
+        </template>
+
+
+        <template url="/redirect" title="Redirect" redirect="/page4">
+        </template>
+
+        <template url="/page4">
+            This is page 4
+        </template>
+
+        <template url="/page5/:id" props="{}">
+           <template>
+                Page 5 props: {{ JSON.stringify($props) }}<br>
+                Page 5 route params: {{ JSON.stringify($route.params) }}
+           </template>
+           <style scoped>
+           </style>
+           <script>
+           return class vue {
+              mounted() {
+              }
+           }
+           </script>
+        </template>
+
+        <template url="/page6" title="Page 6" props="myRouterViewProp">
+            <template>
+                Router view props are received: {{ JSON.stringify($props) }}
+            </template>
+            <style scoped>
+            </style>
+            <script>
+            return class vue {
+                mounted() {
+                }
+            }
+            </script>
+        </template>
+
+        <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js",
+                "vue-router": "https://unpkg.com/vue-router@4/dist/vue-router.esm-browser.prod.js"
+            }
+        }
+        </script>
+        <script type="module">
+            import "vue";
+            import {VueBlocks} from "/src/VueBlocks.js";
+
+            VueBlocks.mount('app');
+        </script>
+    </body>
+</html>

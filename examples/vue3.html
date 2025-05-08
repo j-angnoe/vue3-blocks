@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+   <script type="importmap">
+      {
+         "imports": {
+            "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
+         }
+      }
+      </script>
+</head>
+<body>
+
+<app></app>
+
+<template component="app">
+   <p>
+      Dit is de app
+      <br>
+      my new component: <my-new-component></my-new-component>
+
+      <br>
+      component-without-script: <component-without-script></component-without-script>
+   </p>
+
+   <p> En dit is de tweede paragraaf</p>
+
+   <hr>
+
+
+   my-vue2-style-component: <my-vue2-style-component></my-vue2-style-component>
+
+   <hr>
+
+   my-vue2-classic-export-default-component:
+   <my-vue2-classic-export-default-component></my-vue2-classic-export-default-component>
+
+   <style scoped>
+   p { 
+      color: green;
+   }
+   </style>
+   <script setup>
+      import { ref, computed } from "vue";
+   </script>
+</template>
+
+<template component="component-without-script">
+   Hallo, hoe is het?
+</template>
+
+<template component="my-new-component">
+   <template>
+      <div>
+         <p>Hoe is het? antwoord: {{ msg ? msg : 'undefined'}} <button @click="click">KLIEK</button></p>
+      </div>
+   </template>
+
+   <style scoped>
+         p { color: red; }
+   </style>
+
+   <script setup>
+      // This demonstrates vue3 composition api.
+      import uniqid from "uniqid";
+
+      const msg = ref('hoi ' + uniqid())
+
+      function click() { 
+            alert("Hallo");
+      }
+      // Unfortunately you MUST return the variables that should be used.
+      return {msg, click};
+   </script>
+</template>
+
+<template component="my-vue2-style-component">
+   <!-- template content here -->
+   <p>Hoe is het? antwoord: {{ msg ? msg : 'undefined'}} <button @click="click">KLIEK</button></p>
+   <style scoped>
+   
+   </style>
+   <script>
+      import { ref, computed } from "vue";
+      import uniqid from "uniqid";
+
+      return class vue { 
+         msg = "hoi"
+         mounted() { 
+            // alert("MOUNTED class vue");
+         }
+         click() { 
+               alert(this.msg + " " + uniqid());
+         }
+      }
+   </script>
+</template>
+
+<template component="my-vue2-classic-export-default-component">
+   <template>
+      <p>Hoe is het? antwoord: {{ msg ? msg : 'undefined'}} <button @click="click">KLIEK</button></p>
+   </template>
+   <style scoped>
+   
+   </style>
+   <script>
+      import { ref, computed } from "vue";
+      import uniqid from "uniqid";
+
+      export default { 
+         data() { 
+            return {
+               msg: 'hello'
+            }
+         },
+         mounted() { 
+            // alert("MOUNTED EXPORT DEFAULT");
+         },
+         methods: { 
+            click() { 
+               alert(this.msg + " " + uniqid());
+            }
+         }
+      }
+   </script>
+</template>
+
+<script type="module">
+   import {createApp, ref, defineAsyncComponent} from 'vue';
+   import { EmbeddedComponent } from '../../src/EmbeddedComponent.js';
+
+   var app = createApp({
+      setup() { 
+      }
+   });
+
+   function collectComponents() { 
+      for(let el of document.querySelectorAll('template[component], template[url]')) { 
+            if (el.hasAttribute('component')) {
+               const comp = new EmbeddedComponent(el, el.getAttribute('component'));
+
+               comp.RegisterWith(app);
+            }
+      }
+   }
+
+   collectComponents();
+
+   const appEl = document.querySelector('app')
+   appEl.innerHTML = '<app></app>';
+   app.mount(appEl);
+</script>
+</body>
+</html>
