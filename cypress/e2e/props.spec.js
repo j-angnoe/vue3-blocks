@@ -1,12 +1,7 @@
 /// <reference types="cypress" />
 
 context('Actions', () => {
-    function navigate(url) {
-        var baseUrl = 'http://localhost:8080/cypress/e2e/props.html';
-        url = url || '';
-        cy.visit(baseUrl + url);
-    }
-    beforeEach(() => navigate());
+    beforeEach(() => cy.visit('props.html'));
 
     it('composition api props works', () => {
         cy.get('#app-container').contains('composition api $attrs: {}')

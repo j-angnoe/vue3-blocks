@@ -1,0 +1,20 @@
+html { 
+    background: #eee;
+    font-family: sans-serif;
+}
+#app-container { 
+    margin: 30px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+body::before { 
+    content: 'Vue3-blocks e2e test suite';
+    text-align: center;
+    display: block;
+    font-size: 150%;
+    margin-top: 50px;
+    font-weight: bold;
+}
+

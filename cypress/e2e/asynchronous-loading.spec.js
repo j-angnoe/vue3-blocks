@@ -1,13 +1,7 @@
 
 context('Actions', () => {
-    function navigate(url) {
-        var baseUrl = 'http://localhost:8080/cypress/e2e/';
-        url = url || '';
-        cy.visit(baseUrl + url);
-    }
-  
     beforeEach(() => {
-        navigate('asynchronous-loading.html')
+        cy.visit('asynchronous-loading.html')
     })
     // https://on.cypress.io/interacting-with-elements
   
