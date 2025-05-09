@@ -25,8 +25,12 @@ context('Actions', () => {
     it('relative paths inside externally loaded resources are handled properly', () => {
         // module2-component1 is shown
         cy.get('#load-async-relative-paths').should('contain', 'This should be color green')
-
+        
         // and it should have color green, defined by a stylesheet which is linked relatively.
         cy.get('#load-async-relative-paths .module2').should('have.css', 'color', 'rgb(0, 128, 0)')
+        
+        // if the external module references relative modules, those will be resolved correctly.
+        cy.get('#load-async-relative-paths').should('contain', 'itWorks can be loaded: it works')
+
     });
 });

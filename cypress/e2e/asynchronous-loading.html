@@ -47,17 +47,8 @@
         <template src="async-module1.html"></template>
         <template src="anotherfolder/async-module2.html"></template>
 
-        <script type="importmap">
-        {
-            "imports": {
-                "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
-            }
-        }
-        </script>
         <script type="module">
-            import "vue";
-            import {VueBlocks} from "/src/VueBlocks.js";
-
+            import {VueBlocks} from "/dist/vue-blocks.esm.js";
             VueBlocks.mount('app');
         </script>
     </body>

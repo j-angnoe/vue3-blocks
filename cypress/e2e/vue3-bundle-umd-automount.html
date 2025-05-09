@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/dist/vue-blocks.umd.js"></script>
+    <link rel="stylesheet" href="e2e.css">
+</head>
+<body>
+
+    <div id="app-container">
+        <p>
+            Here we demonstrate vue-blocks automount, when loading via script (umd mode)
+        </p>
+        <app></app>
+    </div>
+
+    <template component="app">
+        <p>
+            Vue App (UMD) is mounted: {{ msg }}<br>
+            router: <router-view></router-view>
+        </p>
+        <script setup>
+            import { ref, computed } from "vue";
+
+            const msg = ref("hello from vue")
+        </script>
+    </template>
+
+    <template url="/" title="">
+        router works
+    </template>
+</body>
+
+</html>

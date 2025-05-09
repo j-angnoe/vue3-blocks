@@ -33,4 +33,11 @@ context('Actions', () => {
         cy.get('#button-counter-action').click();
         cy.get('#app-container').should('contain','You clicked me 2 times');
     })
+
+    it('it can load modules from server and make them available in template', () => {
+        cy.get('#app-container').should('contain','astLib(): ast-lib works');
+        cy.get('#app-container').should('contain','xxx: xValue');
+        cy.get('#app-container').should('contain','y: yValue');
+        cy.get('#app-container').should('contain','z: zValue');
+    });
 });

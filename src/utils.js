@@ -30,3 +30,22 @@ export function createDeferred() {
    }    
    return defaultValue
  }
+
+export function highlightErrorInSource(source, error) {
+   const lines = source.split('\n');
+   const lineIndex = error.lineno - 1;
+   const line = lines[lineIndex] ?? '';
+   const spacing = '-'.repeat(Math.max(0, error.colno - 1));
+   const pointerLine = (spacing + '^--- ' + error.message + "\n").replace('--^', '> ^')
+
+   const contextLines = [
+      lines[lineIndex - 2] ?? '',
+      lines[lineIndex - 1] ?? '',
+      line,
+      pointerLine,
+      lines[lineIndex + 1] ?? '',
+      lines[lineIndex + 2] ?? '',
+   ];
+
+   return contextLines.join('\n');
+}

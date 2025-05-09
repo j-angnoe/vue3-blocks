@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/dist/vue-blocks.umd.js"></script>
+    <link rel="stylesheet" href="e2e.css">
+</head>
+<body>
+
+    <div id="app-container">
+        <p>
+            Here we demonstrate that automount is prevented if you mount something via VueBlocks yourself.
+        </p>
+        <app></app>
+
+    </div>
+
+
+    <template component="app">
+        Dont show this
+    </template>
+
+    <template component="with-this-component">
+        with this component
+    </template>
+
+    <template url="/" title="">
+        router works
+    </template>
+
+    <script>
+        VueBlocks.mount('app', Vue.createApp({
+            template: `
+                Show this custom mounted app instead (UMD). <with-this-component></with-this-component>
+                <br>router: <router-view></router-view>
+            `
+        }))
+    </script>
+</body>
+
+</html>

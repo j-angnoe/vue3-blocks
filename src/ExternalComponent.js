@@ -5,6 +5,7 @@ import { fetchXhr } from "./utils.js";
 export class ExternalComponent extends EmbeddedComponent {
     constructor(el, src) { 
         const name = src.split('/').pop().split('.').shift();
+        el.setAttribute('base-url', src);
         super(el, name);
         this.src = src;
     }

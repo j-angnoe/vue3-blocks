@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="e2e.css">
+</head>
+<body>
+
+    <script>
+        window.sendSignal = function (msg) { 
+            document.getElementById('signals').innerHTML += "<div>signal: " + msg + "</div>";
+        }
+    </script>
+
+    <div id="app-container">
+        <p>
+            Component definitions should only be evaluated when they are used.
+        </p>
+        <app></app>
+        <div id="signals"></div>
+    </div>
+
+    <template component="app">
+        <template>
+            <component-1></component-1> <br>
+            <component-1></component-1> <br>
+            <component-1></component-1> <br>    
+            <button id="toggle-component-2" @click="component2Enabled = !component2Enabled">Toggle Component 2</button><br>
+            <component-2 v-if="component2Enabled"></component-2><br>
+            <button id="toggle-component-with-imports" @click="componentWithImportsEnabled = !componentWithImportsEnabled">Toggle Component with imports</button><br>
+            <component-with-imports v-if="componentWithImportsEnabled"></component-with-imports><br>
+        </template>
+        <script setup>
+            const component2Enabled = ref(false);
+            const componentWithImportsEnabled = ref(false);
+        </script>
+    </template>
+
+    <template component="component-1">
+        This is component 1
+        <script>
+            sendSignal('Component 1 initialized')
+            return class vue { } 
+        </script>
+    </template>
+    
+    <template component="component-2">
+        This is component 2
+        <script>
+            sendSignal('Component 2 initialized')
+            return class vue { } 
+        </script>
+    </template>
+    
+    <template component="component-with-imports">
+        This is component with imports
+        <script setup>
+            import lazyLoadingLib from './lazy-loading-lib.js';
+        </script>
+    </template>
+    <template component="unused-component">
+        <!-- this never gets used, so this code below should never be evaluated. -->
+        Component 2
+        <script>
+            sendSignal('Unused component is initialized')
+            return class vue { } 
+        </script>
+    </template>
+
+    <script type="module">
+        import { VueBlocks } from "/dist/vue-blocks.esm.js";
+        VueBlocks.mount('app');
+    </script>
+</body>
+
+</html>

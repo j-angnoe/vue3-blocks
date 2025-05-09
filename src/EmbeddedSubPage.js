@@ -25,7 +25,7 @@ export class EmbeddedSubPage extends EmbeddedPage {
         
         route.name = this.name.replace(/^page-/,'subpage-') + (remainder > '' ? '' : 'index'),
            
-        foundParent.children ??= [];
+        foundParent.children = foundParent.children || [];
         foundParent.children.push(route);
         // router.addRoute(foundParent.name, route)
 

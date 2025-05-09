@@ -2,13 +2,14 @@
 
 <template component="module2-component1">
     <div class="module2">
-        This should be color green {{ msg }}
-        My location = {{ myPath }}
+        This should be color green {{ msg }}<br>
+        My location = {{ myPath }}<br>
+        itWorks can be loaded: {{ itWorks() }}<br>
     </div>
     <script setup>
         import uniqid from "uniqid"
+        import itWorks from './anotherfolder-lib.js';
         const msg = ref("unique id: " + uniqid())
         const myPath = document.location;
-        return {msg, myPath}
     </script>
 </template>

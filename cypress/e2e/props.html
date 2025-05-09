@@ -33,7 +33,6 @@
             <script>
                 return class vue { 
                     mounted() {
-                        alert(JSON.stringify({ '$attrs': this.$attrs, '$props': this.$props}))
                     }
                 }
             </script>
@@ -46,9 +45,7 @@
         }
         </script>
         <script type="module">
-            import "vue";
             import {VueBlocks} from "/src/VueBlocks.js";
-
             VueBlocks.mount('app');
         </script>
     </body>

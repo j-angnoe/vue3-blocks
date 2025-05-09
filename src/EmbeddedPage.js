@@ -28,7 +28,7 @@ export class EmbeddedPage extends EmbeddedComponent {
             })
             
         }
-        console.log('finalcomponent', finalComponent);
+        // console.debug('finalcomponent', finalComponent);
         return finalComponent;
     }
 
@@ -50,8 +50,9 @@ export class EmbeddedPage extends EmbeddedComponent {
         // console.log('register url ' + this.url + ' with name ' + this.name);
 
         vueApp.routes ??= [];
-
-        
-        vueApp.routes.push(this.CreateRoute())
+   
+        const route = this.CreateRoute();
+        vueApp.routes.push(route)
+        vueApp.component(this.GetName(), route.component)
     }
 }

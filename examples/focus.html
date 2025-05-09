@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+   <app></app>
+
+   <template component="app">
+      <p>
+         DOE HET: {{ msg }}
+
+         <button @click="counter++">
+            Add one deferred component
+         </button>
+         <template v-for="_ in counter">
+            <test-deferred></test-deferred><br>
+         </template>
+      </p>
+      <script setup>
+         const counter = ref(0);
+
+         const msg = ref("hoi")
+      </script>
+   </template>
+
+   <template component="test-deferred">
+      <template>
+         DEFERRED TEST uniqid {{ uniqid() }}
+      </template>
+      <style scoped>
+      </style>
+      <script setup>
+         import uniqid from "uniqid";
+         for (let i = 0; i < 1000; i++) {
+            console.log('DEFERRED ' + i);
+         }
+         // return class vue { 
+         //    computed = {
+         //       uniqid: () => uniqid()
+         //    }
+         // } 
+      </script>
+   </template>
+   <script type="module">
+      import { VueBlocks, Vue } from "/dist/vue-blocks.esm.js";
+      VueBlocks.mount('app');
+      console.log('window.VueBlocks from module', window.VueBlocks)
+   </script>
+
+   <script>
+      setTimeout(() => {
+         console.log('VueBlocks', window.VueBlocks);
+         console.log('Vue', window.VueBlocks);
+      }, 250)
+   </script>
+</body>
+
+</html>

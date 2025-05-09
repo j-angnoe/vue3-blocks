@@ -35,9 +35,9 @@ export class EmbeddedComponent {
     }
 
     GetVueDefinition() {
-        let deferred = createDeferred();
+        return defineAsyncComponent(async () => {
 
-        (async () => {
+        let deferred = createDeferred();
             
             let tpl = await this.GetClonedTemplate()
 
@@ -47,13 +47,16 @@ export class EmbeddedComponent {
 
             if (scriptEl) {
 
-                let script = new EmbeddedScript(scriptEl);
+                let script = new EmbeddedScript(scriptEl, tpl);
 
                 scriptEl.parentNode.removeChild(scriptEl);
 
                 script.EvaluateComponentDefinition().then(component => {                    
                     const finalComponent = this.FinalizeEvaluatedComponent(component, templateContent);
-                    console.log('finalized Component', finalComponent)
+                    // console.log('finalized Component', finalComponent)
+
+                    // console.debug('component ' + this.GetName(), finalComponent.template);
+                    
                     deferred.resolve(finalComponent);
                 })
 
@@ -79,9 +82,9 @@ export class EmbeddedComponent {
             }
 
             templateContent = tpl.innerHTML
-        })();
 
-        return defineAsyncComponent(() => deferred.promise);
+            return deferred.promise
+        });
     }
 
 

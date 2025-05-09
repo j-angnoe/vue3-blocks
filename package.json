@@ -1,5 +1,5 @@
 {
-  "name": "vue-blocks",
+  "name": "vue3-blocks",
   "version": "0.7.0",
   "description": "Vue Blocks Framework",
   "main": "index.js",
@@ -22,6 +22,8 @@
   "author": "Joshua Angnoe",
   "license": "ISC",
   "devDependencies": {
-    
+    "vite": "^6.3.5",
+    "vue": "3.5",
+    "vue-router": "^4.5.1"
   }
 }

@@ -10,14 +10,16 @@
         </div>
         <template component="app">
             This is the Vue App<br>
-
+            
             <composition-api-basics></composition-api-basics>
             <define-props een="EEN" twee="TWEE"></define-props>
             
             <define-emits @my-event="log.push($event)"></define-emits>
             
             <br>log: <pre v-text="log"></pre>
+           
             <br> <import-component></import-component>
+            <br> <import-module></import-module>
              <script>
                 return class vue { 
                     log = []
@@ -32,6 +34,19 @@
             </template>
             <script setup>
                 import ButtonCounter from './vue3-examples/ButtonCounter.vue';
+            </script>
+        </template>
+
+        <template component="import-module">
+            <template>
+                astLib(): {{ astLib() }}<br>
+                xxx: {{ xxx }}<br>
+                y: {{ y }}<br>
+                z: {{ z }}<br>
+            </template>
+            <script setup>
+                import astLib from './ast-lib-default.js';
+                import {x as xxx, y, z} from './ast-lib.js';
             </script>
         </template>
         

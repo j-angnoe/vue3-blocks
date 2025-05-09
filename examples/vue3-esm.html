@@ -2,13 +2,6 @@
 <html>
 <head>
 
-   <script type="importmap">
-      {
-         "imports": {
-            "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js"
-         }
-      }
-      </script>
 </head>
 <body>
 
@@ -41,6 +34,8 @@
       color: green;
    }
    </style>
+   <script setup>
+   </script>
 </template>
 
 <template component="component-without-script">
@@ -72,7 +67,7 @@
    </script>
 </template>
 
-<template component="my-vue2-style-component">
+<template xcomponent="my-vue2-style-component">
    <!-- template content here -->
    <p>Hoe is het? antwoord: {{ msg ? msg : 'undefined'}} <button @click="click">KLIEK</button></p>
    <style scoped>
@@ -120,31 +115,17 @@
       }
    </script>
 </template>
-
+<script type="importmap">
+{
+    "imports": {
+        "vue": "/dist/vue-blocks.esm.js"
+    }
+}
+</script>
 <script type="module">
-   import {createApp, ref, defineAsyncComponent} from 'vue';
-   import { EmbeddedComponent } from '../../src/EmbeddedComponent.js';
-
-   var app = createApp({
-      setup() { 
-      }
-   });
-
-   function collectComponents() { 
-      for(let el of document.querySelectorAll('template[component], template[url]')) { 
-            if (el.hasAttribute('component')) {
-               const comp = new EmbeddedComponent(el, el.getAttribute('component'));
-
-               comp.RegisterWith(app);
-            }
-      }
-   }
-
-   collectComponents();
-
-   const appEl = document.querySelector('app')
-   appEl.innerHTML = '<app></app>';
-   app.mount(appEl);
+    import {VueBlocks, Vue} from "/dist/vue-blocks.esm.js";
+    VueBlocks.mount('app');
+    console.log('window.VueBlocks from module', window.VueBlocks)
 </script>
 </body>
 </html>

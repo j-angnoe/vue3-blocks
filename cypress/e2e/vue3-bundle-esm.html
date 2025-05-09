@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="e2e.css">
+</head>
+<body>
+
+    <div id="app-container">
+        <p>
+            Here we demonstrate vue-blocks esm, which does not autoload.
+        </p>
+        <app></app>
+    </div>
+
+    <template component="app">
+        <p>
+            Vue App (ESM) is mounted: {{ msg }}
+            <with-this-component></with-this-component><br>
+            router: <router-view></router-view>
+        </p>
+        <script setup>
+            import { ref, computed } from "vue";
+
+            const msg = ref("hello from vue")
+        </script>
+    </template>
+
+    <template url="/">
+        router works
+    </template>
+    
+    <template component="with-this-component">
+        <template>
+            with this component
+        </template>
+        <style scoped>
+        </style>
+        <script setup>
+        
+        </script>
+    </template>
+    <script type="module">
+        import { VueBlocks } from "/dist/vue-blocks.esm.js";
+
+        VueBlocks.mount('app');
+    </script>
+</body>
+
+</html>
